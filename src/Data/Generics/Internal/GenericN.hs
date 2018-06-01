@@ -93,7 +93,7 @@ instance
   ( Coercible (Rep a) (RepN a)
   , Generic a
   , GenericRepN a
-  ) => GenericToN a where
+  ) => GenericFromN a where
   fromN :: forall x. a -> RepN a x
   fromN = coerce (from :: a -> Rep a x)
   {-# INLINE fromN #-}
