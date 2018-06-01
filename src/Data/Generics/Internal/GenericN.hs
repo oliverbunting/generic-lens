@@ -24,7 +24,9 @@
 module Data.Generics.Internal.GenericN
   ( Param
   , Rec (Rec, unRec)
-  , GenericN (..)
+  , GenericRepN (..)
+  , GenericToN (..)
+  , GenericFromN (..)
   ) where
 
 import Data.Kind
@@ -55,20 +57,43 @@ type family Zip (a :: Type -> Type) (b :: Type -> Type) :: Type -> Type where
 class
   ( Coercible (Rep a) (RepN a)
   , Generic a
-  ) => GenericN (a :: Type) where
+  ) => GenericRepN (a :: Type) where
   type family RepN (a :: Type) :: Type -> Type
-  type instance RepN a = Zip (Rep (Indexed a 0)) (Rep a)
+
+class
+  ( Coercible (Rep a) (RepN a)
+  , Generic a
+  , GenericRepN (a :: Type)
+  ) => GenericFromN (a :: Type) where
+    fromN :: a -> RepN a x
+
+class
+  ( Coercible (Rep a) (RepN a)
+  , Generic a
+  , GenericRepN (a :: Type)
+  ) => GenericToN (a :: Type) where
   toN :: RepN a x -> a
-  fromN :: a -> RepN a x
 
 instance
   ( Coercible (Rep a) (RepN a)
   , Generic a
-  ) => GenericN a where
+  ) => GenericRepN a where
+  type instance RepN a = Zip (Rep (Indexed a 0)) (Rep a)
+
+instance
+  ( Coercible (Rep a) (RepN a)
+  , Generic a
+  , GenericRepN a
+  ) => GenericToN a where
   toN :: forall x. RepN a x -> a
   toN   = coerce (to :: Rep a x -> a)
   {-# INLINE toN #-}
 
+instance
+  ( Coercible (Rep a) (RepN a)
+  , Generic a
+  , GenericRepN a
+  ) => GenericToN a where
   fromN :: forall x. a -> RepN a x
   fromN = coerce (from :: a -> Rep a x)
   {-# INLINE fromN #-}

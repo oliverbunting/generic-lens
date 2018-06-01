@@ -44,8 +44,12 @@ class HasParam (p :: Nat) s t a b | p t a -> s, p s b -> t, p s -> a, p t -> b w
   param :: Applicative g => (a -> g b) -> s -> g t
 
 instance
-  ( GenericN s
-  , GenericN t
+  ( GenericToN s
+  , GenericFromN s
+  , GenericRepN s
+  , GenericToN t
+  , GenericFromN t
+  , GenericRepN t
   -- TODO: merge the old 'Changing' code with 'GenericN'
   , s ~ Infer t (P n b 'PTag) a
   , t ~ Infer s (P n a 'PTag) b

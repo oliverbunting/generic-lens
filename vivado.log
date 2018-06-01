@@ -1,0 +1,17 @@
+#-----------------------------------------------------------
+# Vivado v2017.1 (64-bit)
+# SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+# IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+# Start of session at: Tue Apr 17 15:27:38 2018
+# Process ID: 5378
+# Current directory: /home/ollie/repos/generic-lens
+# Command line: vivado
+# Log file: /home/ollie/repos/generic-lens/vivado.log
+# Journal file: /home/ollie/repos/generic-lens/vivado.jou
+#-----------------------------------------------------------
+start_gui
+xterm: Xt error: Can't open display: 
+xterm: DISPLAY is not set
+ERROR: [Common 17-1374] Display test failed. Please check DISPLAY environment variable and X server permissions for remote display.
+exit
+INFO: [Common 17-206] Exiting Vivado at Tue Apr 17 15:28:46 2018...
